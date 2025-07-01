@@ -11,3 +11,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  
+  /* Fondo */
+  --color-bg: #f5f5f5;          /* bg-gray-100 */
+  --color-header: #e5e5e5;      /* bg-gray-200 */
+
+  /* Bordes */
+  --color-border: #e0e0e0;      /* border-gray-300 */
+
+  /* Texto */
+  --color-text: #4b5563;        /* text-gray-600 */
+  --color-input-text: #d1d5db;  /* text-gray-300 */
+  --color-btn-text: #f3f4f6;    /* text-gray-100 */
+}
+
+[data-theme="dark"] {
+  --color-bg: #1a1a1a;
+  --color-text: #f5f5f5;
+  /* ... */
+}
+.minimize {
+  width: 4.94rem !important;
+}
+.minimize a span {
+  display: none;
+}
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
