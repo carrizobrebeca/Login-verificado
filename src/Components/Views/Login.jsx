@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { status, token, cookie, user } = useSelector((state) => state.login);
+  const { status, user } = useSelector((state) => state.login);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [e, setE] = useState(false);
@@ -18,25 +18,22 @@ const Login = () => {
     userName: "userName no puede estar vacío",
     password: "Password no puede estar vacía",
   });
-  
+
   useEffect(() => {
     if (status === "failed") {
-      setE(true)
+      setE(true);
     }
-  }, [status, e]);
+  }, [status]);
   useEffect(() => {
-    if (token) {
+    if (user) {
       navigate("/home");
     }
-  }, [token, cookie, navigate]);
+  }, [user, navigate]);
   const validate = (state, name) => {
-    if (name === "userName") {
-      setErrors({ ...errors, userName: state.userName === "" ? "Nombre de usuario no puede estar vacío" : "" });
-    }
-
-    if (name === "password") {
-      setErrors({ ...errors, password: state.password === "" ? "Password no puede estar vacío" : "" });
-    }
+    setErrors((prev) => ({
+    ...prev,
+    [name]: state[name] === "" ? `${name === "userName" ? "Nombre de usuario" : "Password"} no puede estar vacío` : "",
+  }));
   };
 
   const handleChange = (e) => {
@@ -59,8 +56,9 @@ const Login = () => {
       dispatch(fetchLogin(state))
         .unwrap()
         .then((response) => {
-          localStorage.setItem('id', response.id);
+          localStorage.setItem('id', response.user.id);
         })
+
         .catch((err) => {
           console.error(err);
         });
@@ -92,7 +90,7 @@ const Login = () => {
                 />
               </div>
 
-              <div className="pb-4 relative"> {/* <- AGREGÁ ESTO */}
+              <div className="pb-4 relative">
                 <input
                   className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
                   type={showPassword ? "text" : "password"}
@@ -122,16 +120,16 @@ const Login = () => {
                 </button>
               </div>
               {e && (
-                <div className="pt-4 pb-4 flex justify-center">
+                <div className="flex justify-center">
                   <h2 className="text-red-400 white p-2 font-bold">
-                    Error al crear usuario
+                    Error al iniciar sesión
                   </h2>
                 </div>
               )}
             </div>
           </form>
 
-          {/* Botón Registrarse centrado con margen arriba */}
+
           <div className="mt-2 pb-4">
             <button onClick={() => navigate("/register")} className="bg-red-400 rounded-xl text-white p-2 border-2 border-white">
               Registrarse

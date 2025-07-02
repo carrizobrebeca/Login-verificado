@@ -222,7 +222,7 @@ const Register = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="pb-4 relative"> {/* <- AGREGÁ ESTO */}
+              <div className="pb-4 relative"> 
                 <input
                   className="text-text text-lg w-full pl-4 pr-2 pt-2 pb-2 border-2 b-gray-200 rounded-xl"
                   type={showPassword ? "text" : "password"}
